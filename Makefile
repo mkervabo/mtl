@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adimose <adimose@student.42.fr>            +#+  +:+       +#+         #
+#    By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/08 15:25:21 by mkervabo          #+#    #+#              #
-#    Updated: 2019/07/11 21:35:20 by adimose          ###   ########.fr        #
+#    Updated: 2019/07/15 15:39:56 by mkervabo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME   = obj.a
+NAME   = mtl.a
 CC     = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -g
 
@@ -20,7 +20,7 @@ OBJS=$(patsubst src/%.c,build/%.o,$(SRCS))
 
 all: $(NAME)
 
-build/%.o: src/%.c include/obj.h Makefile
+build/%.o: src/%.c include/mtl.h Makefile
 	@mkdir -p build
 	$(CC) $(CFLAGS) -c $< -o $@
 

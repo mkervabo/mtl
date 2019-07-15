@@ -6,11 +6,12 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:34:14 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 14:11:59 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/15 15:51:17 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mtl.h"
+#include <stdlib.h>
 
 t_mtl		create_mtl(size_t capacity)
 {

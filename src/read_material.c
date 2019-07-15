@@ -6,11 +6,12 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:46:34 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 15:23:25 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/15 16:35:24 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mtl.h"
+#include <stdlib.h>
 
 void			*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -75,7 +76,7 @@ t_mtl_error		read_material(t_reader *r, t_material *material)
 		return (err);
 	create_material(10);
 	skip_ws(r, true);
-	while((c = reader_peek(r) != 1) && c != 'n')
+	while((c = reader_peek(r)) != -1 && c != 'n')
 	{
 		if (c == 'K')
 		{
@@ -94,7 +95,8 @@ t_mtl_error		read_material(t_reader *r, t_material *material)
 		}
 		else
 			return (No_Valid_Value);
-		append_material_value(material, value);
+		if (append_material_value(material, value) == false)
+			return (Error_Malloc);
 		skip_ws(r, true);
 	}
 	return (No_Error);

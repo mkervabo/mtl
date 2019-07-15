@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 12:26:58 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 15:10:12 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/15 16:31:03 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,10 @@ t_mtl_error		read_mtl(t_reader *r, t_mtl *mtl)
 		if (reader_cmp(r, "ewmtl") == false)
 			return (Wrong_Newmtl);
 		skip_ws(r, false);
-		if ((err =read_material(r, &material)) != No_Error)
+		if ((err = read_material(r, &material)) != No_Error)
 			return (err);
-		append_material(mtl, material);
-		reader_next(r);
-		skip_ws(r, true);
+		if (append_material(mtl, material) == false)
+			return (Error_Malloc);
 	}
 	return (No_Error);
 }
