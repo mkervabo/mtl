@@ -1,0 +1,9 @@
+SRCS += src/append.c
+SRCS += src/create.c
+SRCS += src/mtl.c
+SRCS += src/read_d.c
+SRCS += src/read_digit.c
+SRCS += src/read_k.c
+SRCS += src/read_map.c
+SRCS += src/read_material.c
+SRCS += src/reader.c
