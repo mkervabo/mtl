@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:46:34 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 16:35:24 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/16 10:59:49 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ t_mtl_error		read_material(t_reader *r, t_material *material)
 	t_mtl_error			err;
 	t_material_value	value;
 	char				c;
-	char		*name;
+	char				*name;
 
 	if((err = read_str(r, &name)) != No_Error)
 		return (err);
-	create_material(10);
+	*material = create_material(10);
 	skip_ws(r, true);
 	while((c = reader_peek(r)) != -1 && c != 'n')
 	{
