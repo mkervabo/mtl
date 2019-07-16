@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:39:27 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 15:33:10 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/16 11:05:04 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool			append_material(t_mtl *mtl, t_material material)
 
 bool			append_material_value(t_material *material, t_material_value value)
 {
-	size_t			new_capacity;
+	size_t				new_capacity;
 	t_material_value	*new;
 
 	if (material->len == material->capacity)

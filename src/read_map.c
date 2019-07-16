@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 14:18:28 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 15:51:54 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/16 11:06:25 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static t_mtl_error		read_map_ka_kd(t_reader *r, t_material_value *value, bool ka
 		value->type = Mtl_Map_Ka;
 	else
 		value->type = Mtl_Map_Kd;
+	reader_next(r);
+	skip_ws(r, false);
 	if ((err = read_str(r, &value->value.map)) != No_Error)
 		return (Invalid_Map_Value);
 	return (No_Error);

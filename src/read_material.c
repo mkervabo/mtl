@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:46:34 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/16 10:59:49 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/16 11:54:45 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,20 @@ t_mtl_error		read_str(t_reader *r, char **str)
 	return (No_Error);
 }
 
+static bool			new_type(t_material *material, t_material_value *value)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < material->len)
+	{
+		if (material->inner[i].type == value->type)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 t_mtl_error		read_material(t_reader *r, t_material *material)
 {
 	t_mtl_error			err;
@@ -95,6 +109,8 @@ t_mtl_error		read_material(t_reader *r, t_material *material)
 		}
 		else
 			return (No_Valid_Value);
+		if (new_type(material, &value) == false)
+			return (Info_Already_Exists);
 		if (append_material_value(material, value) == false)
 			return (Error_Malloc);
 		skip_ws(r, true);
