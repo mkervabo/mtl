@@ -6,7 +6,7 @@
 /*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 12:30:28 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/16 11:30:43 by mkervabo         ###   ########.fr       */
+/*   Updated: 2019/07/16 13:17:24 by mkervabo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum	e_mtl_error
 	Invalid_Digit,
 	Invalid_Digit_Dot,
 	Info_Already_Exists,
+	Name_Already_Exists,
 }				t_mtl_error;
 
 typedef struct	s_reader
