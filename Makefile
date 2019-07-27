@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME   = mtl.a
+NAME   = libmtl.a
 CC     = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -g
 
