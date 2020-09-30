@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_digit.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 14:44:56 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/15 15:00:17 by mkervabo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "mtl.h"
 
-static double	read_integer(t_reader *r, bool *s)
+static double	read_integer(t_mtl_reader *r, bool *s)
 {
 	double	num;
 	int16_t	c;
@@ -33,7 +21,7 @@ static double	read_integer(t_reader *r, bool *s)
 	return (num);
 }
 
-static double	read_float(t_reader *r)
+static double	read_float(t_mtl_reader *r)
 {
 	double	num;
 	size_t	i;
@@ -55,7 +43,7 @@ static double	read_float(t_reader *r)
 	return (num);
 }
 
-t_mtl_error		read_digit(t_reader *r, double *digit)
+t_mtl_error		read_digit(t_mtl_reader *r, double *digit)
 {
 	bool	sign;
 	int16_t	c;

@@ -1,52 +1,54 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkervabo <mkervabo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 14:18:28 by mkervabo          #+#    #+#             */
-/*   Updated: 2019/07/16 11:06:25 by mkervabo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "mtl.h"
 
-
-static t_mtl_error		read_map_ka_kd(t_reader *r, t_material_value *value, bool ka)
+t_mtl_error read_material_map(t_mtl_reader *r, t_mtl_material *material)
 {
-	t_mtl_error	err;
-
-	if (ka == true)
-		value->type = Mtl_Map_Ka;
-	else
-		value->type = Mtl_Map_Kd;
-	reader_next(r);
-	skip_ws(r, false);
-	if ((err = read_str(r, &value->value.map)) != No_Error)
-		return (Invalid_Map_Value);
-	return (No_Error);
-}
-
-t_mtl_error		read_map(t_reader *r, t_material_value *value)
-{
-	t_mtl_error	err;
-	char		c;
-
-	reader_next(r);
-	if (reader_cmp(r, "ap_K") == false)
-		return (No_Valid_Map_Value);
-	if ((c = reader_peek(r)) == 'a')
-	{
-		if ((err = read_map_ka_kd(r, value, true)) != No_Error)
-			return (err);
-	}
-	else if (c == 'd')
-	{
-		if ((err = read_map_ka_kd(r, value, false)) != No_Error)
-			return (err);
-	}
-	else
-		return (No_Valid_Map_Value);
-	return (No_Error);
+    char c;
+    t_mtl_error err;
+    
+    if (reader_cmp(r, "ap_") == false)
+        return (Wrong_Illum);
+    reader_next(r);
+    if((c = reader_peek(r)) == 'K')
+    {
+        reader_next(r);
+        if ((c = reader_peek(r)) == 'a')
+        {
+            if ((err = read_str(r, &material->ka_map)) != No_Error)
+                return (err);
+        }
+        else if (c == 's')
+        {
+            if ((err = read_str(r, &material->ks_map)) != No_Error)
+                return (err);
+        }
+        else if (c == 'd')
+        {
+            if ((err = read_str(r, &material->kd_map)) != No_Error)
+                return (err);
+        }
+        else
+            while ((c = reader_peek(r)) != -1 && c != '\n')
+                reader_next(r);
+    }
+    else if (c == 'N')
+    {
+        reader_next(r);
+        if ((c = reader_peek(r)) == 's')
+        {
+            if ((err = read_str(r, &material->ns_map)) != No_Error)
+                return (err);
+        }
+        else if (c == 'i')
+        {
+            if ((err = read_str(r, &material->ni_map)) != No_Error)
+                return (err);
+        }
+        else
+            while ((c = reader_peek(r)) != -1 && c != '\n')
+                reader_next(r);
+    }
+    else
+        while ((c = reader_peek(r)) != -1 && c != '\n')
+            reader_next(r);
+    return (No_Error);
 }

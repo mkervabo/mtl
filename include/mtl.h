@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <stdint.h>
+# include <stdlib.h>
 
 typedef enum	e_mtl_error
 {
@@ -29,11 +30,18 @@ typedef enum	e_mtl_error
 	Invalid_D_Value,
 	Invalid_Digit,
 	Invalid_Digit_Dot,
+	Invalid_Color,
+	Invalid_Ns_Value,
+	Invalid_Ni_Value,
+	Invalid_Sharpness_Value,
+	Color_Already_Attribute,
+	Wrong_Illum,
+	Invalid_Illum,
 	Info_Already_Exists,
 	Name_Already_Exists,
 }				t_mtl_error;
 
-typedef struct	s_reader
+typedef struct	s_mtl_reader
 {
 	int		fd;
 	char	*buffer;
@@ -42,74 +50,59 @@ typedef struct	s_reader
 	size_t	i;
 	size_t	column;
 	size_t	line;
-}				t_reader;
+}				t_mtl_reader;
 
-typedef struct	s_color
+typedef struct	s_mtl_color
 {
 	double		a;
 	double		b;
 	double		c;
-}				t_color;
+}				t_mtl_color;
 
-typedef union	u_mtl_value
+typedef struct s_mtl_material
 {
-	t_color		color;
+	char		*name;
+	t_mtl_color	ka;
+	t_mtl_color kd;
+	t_mtl_color ks;
 	double		d;
-	char 		*map;
-}				t_mtl_value;
+	double		illum;
+	double		ns;
+	double		ni;
+	double		sharpeness;
+	char		*ka_map;
+	char		*kd_map;
+	char		*ks_map;
+	char		*ni_map;
+	char		*ns_map;
 
-typedef enum	e_mtl_type
-{
-	Mtl_Ka,
-	Mtl_Kd,
-	Mtl_D,
-	Mtl_Map_Ka,
-	Mtl_Map_Kd
-}				t_mtl_type;
-
-typedef struct	s_material_value
-{
-	t_mtl_type	type;
-	t_mtl_value	value;
-}				t_material_value;
-
-typedef	struct s_material
-{
-	char				*name;
-	size_t				len;
-	size_t				capacity;
-	t_material_value	*inner;
-	
-}				t_material;
+}				t_mtl_material;
 
 typedef struct	s_mtl
 {
-	size_t		len;
-	size_t		capacity;
-	t_material	*inner;
+	size_t			len;
+	size_t			capacity;
+	t_mtl_material	*inner;
 }				t_mtl;
 
-int16_t			reader_peek(t_reader *self);
-void			reader_next(t_reader *self);
 
-bool			reader_cmp(t_reader *r, char *str);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			skip_ws(t_mtl_reader *r, bool newline);
+bool			reader_cmp(t_mtl_reader *r, char *str);
 
-void			skip_ws(t_reader *r, bool newline);
-
-t_reader		create_reader(int fd, char *buffer, size_t buffer_size);
 t_mtl			create_mtl(size_t capacity);
-t_material		create_material(size_t capacity);
+bool			append_material(t_mtl *mtl, t_mtl_material material);
+bool			append_char(char **str, char c, size_t *size , size_t i);
 
-bool			append_material(t_mtl *mtl, t_material material);
-bool			append_material_value(t_material *material, t_material_value value);
+t_mtl_error		read_digit(t_mtl_reader *r, double *digit);
+t_mtl_error		read_str(t_mtl_reader *r, char **str);
 
-t_mtl_error		read_mtl(t_reader *r, t_mtl *mtl);
-t_mtl_error		read_digit(t_reader *r, double *digit);
-t_mtl_error		read_str(t_reader *r, char **str);
-t_mtl_error		read_material(t_reader *r, t_material *material);
-t_mtl_error		read_k(t_reader *r, t_material_value *value);
-t_mtl_error		read_map(t_reader *r, t_material_value *value);
-t_mtl_error		read_d(t_reader *r, t_material_value *value);
+t_mtl_error     read_material(t_mtl_reader *r, t_mtl_material *material);
+t_mtl_error     read_material_k(t_mtl_reader *r, t_mtl_material *material);
+t_mtl_error     read_material_n(t_mtl_reader *r, t_mtl_material *material);
+
+t_mtl_reader	create_reader(int fd, char *buffer, size_t buffer_size);
+int16_t			reader_peek(t_mtl_reader *self);
+void			reader_next(t_mtl_reader *self);
+
 
 #endif

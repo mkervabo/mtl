@@ -13,9 +13,9 @@
 #include "mtl.h"
 #include <unistd.h>
 
-t_reader	create_reader(int fd, char *buffer, size_t buffer_size)
+t_mtl_reader	create_reader(int fd, char *buffer, size_t buffer_size)
 {
-	return ((t_reader){
+	return ((t_mtl_reader){
 		.fd = fd,
 		.buffer = buffer,
 		.buffer_size = buffer_size,
@@ -26,7 +26,7 @@ t_reader	create_reader(int fd, char *buffer, size_t buffer_size)
 	});
 }
 
-int16_t		reader_peek(t_reader *self)
+int16_t		reader_peek(t_mtl_reader *self)
 {
 	size_t	len;
 
@@ -41,7 +41,7 @@ int16_t		reader_peek(t_reader *self)
 	return (self->buffer[self->i]);
 }
 
-void		reader_next(t_reader *self)
+void		reader_next(t_mtl_reader *self)
 {
 	if (reader_peek(self) == '\n')
 	{
